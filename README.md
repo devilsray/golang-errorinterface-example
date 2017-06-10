@@ -4,11 +4,11 @@ This little example has two error types which support the error interface. 100 e
 
 To run this example in linux use following:
 
+```{r, engine='bash', count_lines}
 go get github.com/devilsray/golang-errorinterface-example
-
 cd $GOPATH/src/github.com/devilsray/golang-errorinterface-example/
-
 go run *.go
+```
 
 The output will look like
 
