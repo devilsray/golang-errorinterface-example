@@ -2,31 +2,32 @@ package main
 
 import (
 	"fmt"
-	"time"
 	"math/rand"
+	"time"
 )
 
 func main() {
 	for i := 0; i < 100; i++ {
-		err := GiveMeSomeError(i)
+		err := GiveMeSomeError() // get an error type a or b
 		if err != nil {
 			switch t := err.(type) {
 			case *TypeAError:
-				fmt.Printf("%d: this is an error from type TypeAError\n", t.ErrorNumber)
+				fmt.Printf("%d: this is an error from type TypeAError\n", i)
 			case *TypeBError:
-				fmt.Printf("%d: and this is an error from type TypeBError\n", t.ErrorNumber)
+				fmt.Printf("%d: and this is an error from type TypeBError\n", i)
 			default:
-				fmt.Println("not a model missing error")
+				fmt.Printf("unknown error type: %s\n", t)
 			}
 		}
 	}
 }
 
-func GiveMeSomeError(number int) error {
-	randomSource := rand.NewSource(time.Now().UnixNano())
+// Return random error type
+func GiveMeSomeError() error {
+	randomSource := rand.NewSource(time.Now().UnixNano()) // create random source
 	if rand.New(randomSource).Intn(2) < 1 {
-		return &TypeAError{ErrorNumber: number}
+		return &TypeAError{} // return error type a
 	} else {
-		return &TypeBError{ErrorNumber: number}
+		return &TypeBError{} // return error type b
 	}
 }
