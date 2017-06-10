@@ -2,16 +2,13 @@ package main
 
 import (
 	"fmt"
+	"time"
+	"math/rand"
 )
 
-type TestObject interface {
-	GiveMeSomeError(int int) error
-}
-
 func main() {
-	testStruct := TestStruct{}
 	for i := 0; i < 100; i++ {
-		err := testStruct.GiveMeSomeError(i)
+		err := GiveMeSomeError(i)
 		if err != nil {
 			switch t := err.(type) {
 			case *TypeAError:
@@ -22,5 +19,14 @@ func main() {
 				fmt.Println("not a model missing error")
 			}
 		}
+	}
+}
+
+func GiveMeSomeError(number int) error {
+	randomSource := rand.NewSource(time.Now().UnixNano())
+	if rand.New(randomSource).Intn(2) < 1 {
+		return &TypeAError{ErrorNumber: number}
+	} else {
+		return &TypeBError{ErrorNumber: number}
 	}
 }
